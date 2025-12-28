@@ -14,16 +14,21 @@ struct Answer {
 contract Survey {
   string public title;
   string public description;
+  uint256 public targetNumber;
+  uint256 public rewardAmount;
   Question[] public questions;
   Answer[] answers;
   //primitive: uint, int, bool, address, bytes32
   constructor(
     string memory _title,
     string memory _description,
+    uint256 _targetNumber,
     Question[] memory _questions
-  ) {
+  ) payable {
     title = _title;
     description = _description;
+    targetNumber = _targetNumber;
+    rewardAmount = msg.value / _targetNumber;
     for (uint i = 0; i < _questions.length; i++) {
       questions.push(
         Question({
@@ -42,10 +47,12 @@ contract Survey {
       _answer.answers.length == questions.length,
       "Mismatched answers length"
     );
+    require(answers.length < targetNumber, "This survey has been ended");
 
     answers.push(
       Answer({respondent: _answer.respondent, answers: _answer.answers})
     );
+    payable(msg.sender).transfer(rewardAmount);
   }
 
   function getAnswers() external view returns (Answer[] memory) {
