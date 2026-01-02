@@ -16,9 +16,12 @@ contract Survey {
   string public description;
   uint256 public targetNumber;
   uint256 public rewardAmount;
-  Question[] public questions;
+  bool testFlag;
+  int16 testInteger;
+  // Questions
+  Question[] questions;
   Answer[] answers;
-  //primitive: uint, int, bool, address, bytes32
+
   constructor(
     string memory _title,
     string memory _description,
@@ -29,6 +32,8 @@ contract Survey {
     description = _description;
     targetNumber = _targetNumber;
     rewardAmount = msg.value / _targetNumber;
+    testFlag = true;
+    testInteger = 10000;
     for (uint i = 0; i < _questions.length; i++) {
       questions.push(
         Question({
@@ -36,9 +41,6 @@ contract Survey {
           options: _questions[i].options
         })
       );
-      /*Question storage q = questions.push(Question({})); // 만약 이전 과정이 없다면 푸시를 했을때 비어있는 구조체가 생성된다.
-        q.question = _questions[i].question;
-        q.options = _questions[i].options; */
     }
   }
 
@@ -48,7 +50,6 @@ contract Survey {
       "Mismatched answers length"
     );
     require(answers.length < targetNumber, "This survey has been ended");
-
     answers.push(
       Answer({respondent: _answer.respondent, answers: _answer.answers})
     );
@@ -59,7 +60,7 @@ contract Survey {
     return answers;
   }
 
-  function getquestions() external view returns (Question[] memory) {
+  function getQuestions() external view returns (Question[] memory) {
     return questions;
   }
 }
