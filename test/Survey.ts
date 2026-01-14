@@ -199,7 +199,7 @@ describe("Survey init", () => {
         questions,
       });
 
-      const returnedQuestions = await cSurvey.getQuestions();
+      const returnedQuestions = await cSurvey.getQuestion();
       expect(returnedQuestions.length).to.equal(questions.length);
       expect(returnedQuestions[0].question).to.equal(questions[0].question);
       expect(returnedQuestions[0].options.length).to.equal(
