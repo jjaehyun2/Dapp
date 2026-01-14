@@ -15,6 +15,7 @@ export default defineConfig({
             enabled: true,
             runs: 200,
           },
+          viaIR: true,
         },
       },
     },
@@ -28,11 +29,13 @@ export default defineConfig({
       type: "edr-simulated",
       chainType: "op",
     },
-    sepolia: {
+    kairos: {
       type: "http",
       chainType: "l1",
-      url: configVariable("SEPOLIA_RPC_URL"),
-      accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+      url: "https://public-en-kairos.node.kaia.io",
+      accounts: [
+        "0x564ce5c4da6e494382b31c4dfd979f8b7d27d7524093e5f993f18c834c9b8571",
+      ],
     },
   },
 });
